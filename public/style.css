@@ -1,0 +1,11 @@
+.App{
+    display: flex;
+}
+
+.Jogo{
+    color: red;
+}
+
+.Letras{
+    color: blue;
+}

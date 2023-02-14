@@ -1,7 +1,11 @@
+import Jogo from "./components/Jogo";
+import Letras from "./components/Letras";
+
 function App() {
   return (
     <div className="App">
-      Lucas
+      <Jogo />
+      <Letras />
     </div>
   );
 }
