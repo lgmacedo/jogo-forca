@@ -1,6 +1,4 @@
-import Letra from "./Letra";
-
-export default function Letras({desativaTudo}) {
+export default function Letras({ letrasAtivadas, handleClick }) {
   const alfabeto = [
     "a",
     "b",
@@ -31,12 +29,19 @@ export default function Letras({desativaTudo}) {
   ];
   return (
     <div className="Letras">
-      {alfabeto.map((letra) => (
-        <Letra
-          desativada = {desativaTudo}
-          letra={letra}
+      {alfabeto.map((letra, index) => (
+        <button
+          disabled={letrasAtivadas[index] ? false : true}
+          className={
+            letrasAtivadas[index]
+              ? "letra backgroundLetraAzul"
+              : "letra backgroundLetraCinza"
+          }
           key={letra}
-        />
+          onClick={()=>handleClick(letra, index)}
+        >
+          {letra.toUpperCase()}
+        </button>
       ))}
     </div>
   );
