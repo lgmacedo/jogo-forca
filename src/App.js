@@ -54,6 +54,13 @@ export default function App() {
   function atualizaTelaClique(letra){
     console.log(palavraFinal);
     console.log(palavraMostrada);
+    let fix = palavraMostrada.split(' ');
+    console.log(fix);
+    fix = fix.join('');
+    console.log(fix);
+    fix = fix.split('');
+    console.log(fix);
+    fix = fix.join(' ');
     const arrayIndices = [];
     for (let i = 0; i < palavraFinal.length; i++){
       if(palavraFinal[i]===letra){
@@ -63,14 +70,26 @@ export default function App() {
     for (let i = 0; i < arrayIndices.length; i++){
       arrayIndices[i] += arrayIndices[i];
     }
-    let newPalavraMostrada = palavraMostrada;
+    let newPalavraMostrada = fix;
     newPalavraMostrada = newPalavraMostrada.split('');
-    for(let i = 0; i < palavraMostrada.length; i++){
+    for(let i = 0; i < fix.length; i++){
       if(arrayIndices.includes(i)){
         newPalavraMostrada[i] = letra;
       }
     }
     newPalavraMostrada = newPalavraMostrada.join('');
+
+    newPalavraMostrada = newPalavraMostrada.split(' ');
+    console.log(newPalavraMostrada);
+    for(let i=0; i<newPalavraMostrada.length; i++){
+      if(newPalavraMostrada[i] === '_' && i !== 0){
+        newPalavraMostrada[i] = ' _'
+      }
+    }
+    console.log(newPalavraMostrada);
+    newPalavraMostrada = newPalavraMostrada.join('');
+    console.log(newPalavraMostrada);
+
     setPalavraMostrada(newPalavraMostrada);
   }
 
