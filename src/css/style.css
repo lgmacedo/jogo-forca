@@ -41,7 +41,6 @@
     font-weight: 700;
     font-size: 50px;
     line-height: 68.1px;
-    color: #000000;
 }
 
 .Letras{
@@ -72,4 +71,12 @@
 
 .backgroundLetraAzul{
     background-color: #E1ECF4;
+}
+
+.corPalavraVerde{
+    color: #27AE60;
+}
+
+.corPalavraVermelha{
+    color: #FF0000;
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import palavras from "./palavras";
 
 let palavraFinal = "";
+let newPalavraMostrada = "";
 
 export default function App() {
   const [numErros, setNumErros] = useState(0);
@@ -12,6 +13,7 @@ export default function App() {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0,
   ]);
+  const [corPalavra, setCorPalavra] = useState("");
 
   function sorteiaPalavra() {
     console.log(palavraFinal);
@@ -40,57 +42,73 @@ export default function App() {
     ]);
   }
 
-  function clicouLetra(letra, index){
+  function clicouLetra(letra, index) {
     const novasLetras = [...letrasAtivadas];
     novasLetras[index] = 0;
     setLetrasAtivadas(novasLetras);
-    if(palavraFinal.split('').includes(letra)){
+    if (palavraFinal.split("").includes(letra)) {
       atualizaTelaClique(letra, index);
-    }else{
-      setNumErros(numErros+1);
+    } else {
+      setNumErros(numErros + 1);
+      if (numErros === 5) {
+        perdeuJogo();
+      }
     }
   }
 
-  function atualizaTelaClique(letra){
-    console.log(palavraFinal);
-    console.log(palavraMostrada);
-    let fix = palavraMostrada.split(' ');
-    console.log(fix);
-    fix = fix.join('');
-    console.log(fix);
-    fix = fix.split('');
-    console.log(fix);
-    fix = fix.join(' ');
+  function atualizaTelaClique(letra) {
+    let fix = palavraMostrada.split(" ");
+    fix = fix.join("");
+    fix = fix.split("");
+    fix = fix.join(" ");
     const arrayIndices = [];
-    for (let i = 0; i < palavraFinal.length; i++){
-      if(palavraFinal[i]===letra){
+    for (let i = 0; i < palavraFinal.length; i++) {
+      if (palavraFinal[i] === letra) {
         arrayIndices.push(i);
       }
     }
-    for (let i = 0; i < arrayIndices.length; i++){
+    for (let i = 0; i < arrayIndices.length; i++) {
       arrayIndices[i] += arrayIndices[i];
     }
-    let newPalavraMostrada = fix;
-    newPalavraMostrada = newPalavraMostrada.split('');
-    for(let i = 0; i < fix.length; i++){
-      if(arrayIndices.includes(i)){
+    newPalavraMostrada = fix;
+    newPalavraMostrada = newPalavraMostrada.split("");
+    for (let i = 0; i < fix.length; i++) {
+      if (arrayIndices.includes(i)) {
         newPalavraMostrada[i] = letra;
       }
     }
-    newPalavraMostrada = newPalavraMostrada.join('');
+    newPalavraMostrada = newPalavraMostrada.join("");
 
-    newPalavraMostrada = newPalavraMostrada.split(' ');
-    console.log(newPalavraMostrada);
-    for(let i=0; i<newPalavraMostrada.length; i++){
-      if(newPalavraMostrada[i] === '_' && i !== 0){
-        newPalavraMostrada[i] = ' _'
+    newPalavraMostrada = newPalavraMostrada.split(" ");
+    for (let i = 0; i < newPalavraMostrada.length; i++) {
+      if (newPalavraMostrada[i] === "_" && i !== 0) {
+        newPalavraMostrada[i] = " _";
       }
     }
-    console.log(newPalavraMostrada);
-    newPalavraMostrada = newPalavraMostrada.join('');
-    console.log(newPalavraMostrada);
+    newPalavraMostrada = newPalavraMostrada.join("");
 
     setPalavraMostrada(newPalavraMostrada);
+
+    if (newPalavraMostrada === palavraFinal) {
+      ganhouJogo();
+    }
+  }
+
+  function ganhouJogo() {
+    setCorPalavra("corPalavraVerde");
+    setLetrasAtivadas([
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0,
+    ]);
+  }
+
+  function perdeuJogo() {
+    setPalavraMostrada(palavraFinal);
+    setCorPalavra("corPalavraVermelha");
+    setLetrasAtivadas([
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0,
+    ]);
   }
 
   return (
@@ -99,6 +117,7 @@ export default function App() {
         numErros={numErros}
         palavra={palavraMostrada}
         handleClick={sorteiaPalavra}
+        corPalavra={corPalavra}
       />
       <Letras letrasAtivadas={letrasAtivadas} handleClick={clicouLetra} />
     </div>
