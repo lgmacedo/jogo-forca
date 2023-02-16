@@ -15,8 +15,7 @@ export default function App() {
   const [corPalavra, setCorPalavra] = useState("");
 
   function escolherPalavra() {
-    console.log(palavraFinal);
-    if (palavraFinal !== "" && corPalavra !== "") {
+    if (palavraFinal !== "") {
       palavraFinal = "";
       setNumErros(0);
       setPalavraMostrada("");
@@ -26,10 +25,8 @@ export default function App() {
       ]);
       setCorPalavra("");
     }
-    if (palavraFinal !== "") {
-      return;
-    }
     palavraFinal = palavras[Math.floor(Math.random() * palavras.length)];
+    console.log(palavraFinal);
     atualizaTelaInicial();
     ativaLetras();
   }
