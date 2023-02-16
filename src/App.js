@@ -4,7 +4,6 @@ import { useState } from "react";
 import palavras from "./palavras";
 
 let palavraFinal = "";
-let newPalavraMostrada = "";
 
 export default function App() {
   const [numErros, setNumErros] = useState(0);
@@ -15,8 +14,18 @@ export default function App() {
   ]);
   const [corPalavra, setCorPalavra] = useState("");
 
-  function sorteiaPalavra() {
+  function escolherPalavra() {
     console.log(palavraFinal);
+    if (palavraFinal !== "" && corPalavra !== "") {
+      palavraFinal = "";
+      setNumErros(0);
+      setPalavraMostrada("");
+      setLetrasAtivadas([
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0,
+      ]);
+      setCorPalavra("");
+    }
     if (palavraFinal !== "") {
       return;
     }
@@ -70,7 +79,7 @@ export default function App() {
     for (let i = 0; i < arrayIndices.length; i++) {
       arrayIndices[i] += arrayIndices[i];
     }
-    newPalavraMostrada = fix;
+    let newPalavraMostrada = fix;
     newPalavraMostrada = newPalavraMostrada.split("");
     for (let i = 0; i < fix.length; i++) {
       if (arrayIndices.includes(i)) {
@@ -116,7 +125,7 @@ export default function App() {
       <Jogo
         numErros={numErros}
         palavra={palavraMostrada}
-        handleClick={sorteiaPalavra}
+        handleClick={escolherPalavra}
         corPalavra={corPalavra}
       />
       <Letras letrasAtivadas={letrasAtivadas} handleClick={clicouLetra} />
