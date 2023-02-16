@@ -1,4 +1,6 @@
-export default function Letras(props) {
+import Letra from "./Letra";
+
+export default function Letras({desativaTudo}) {
   const alfabeto = [
     "a",
     "b",
@@ -29,8 +31,12 @@ export default function Letras(props) {
   ];
   return (
     <div className="Letras">
-      {alfabeto.map(letra => (
-        <button disabled className="letra backgroundLetraCinza">{letra.toUpperCase()}</button>
+      {alfabeto.map((letra) => (
+        <Letra
+          desativada = {desativaTudo}
+          letra={letra}
+          key={letra}
+        />
       ))}
     </div>
   );
