@@ -11,10 +11,10 @@ const imagensForca = [forca0, forca1, forca2, forca3, forca4, forca5, forca6];
 export default function Jogo({numErros, palavra, handleClick, corPalavra}) {
   return (
     <div className="Jogo">
-      <img src={imagensForca[numErros]} alt="forca" />
+      <img data-test="game-image" src={imagensForca[numErros]} alt="forca" />
       <div>
-        <button onClick={handleClick}>Escolher palavra</button>
-        <p className={corPalavra}>{palavra}</p>
+        <button data-test="choose-word" onClick={handleClick}>Escolher palavra</button>
+        <p data-test="word" className={corPalavra}>{palavra}</p>
       </div>
     </div>
   );

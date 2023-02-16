@@ -31,6 +31,7 @@ export default function Letras({ letrasAtivadas, handleClick }) {
     <div className="Letras">
       {alfabeto.map((letra, index) => (
         <button
+          data-test="letter"
           disabled={letrasAtivadas[index] ? false : true}
           className={
             letrasAtivadas[index]
@@ -38,7 +39,7 @@ export default function Letras({ letrasAtivadas, handleClick }) {
               : "letra backgroundLetraCinza"
           }
           key={letra}
-          onClick={()=>handleClick(letra, index)}
+          onClick={() => handleClick(letra, index)}
         >
           {letra.toUpperCase()}
         </button>
