@@ -35,8 +35,8 @@ export default function Letras({ letrasAtivadas, handleClick }) {
           disabled={letrasAtivadas[index] ? false : true}
           className={
             letrasAtivadas[index]
-              ? "letra backgroundLetraAzul"
-              : "letra backgroundLetraCinza"
+              ? "letra backgroundLetraAzul corLetraAzul cursorPointer"
+              : "letra backgroundLetraCinza corLetraCinza"
           }
           key={letra}
           onClick={() => handleClick(letra, index)}

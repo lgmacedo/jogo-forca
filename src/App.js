@@ -2,6 +2,7 @@ import Jogo from "./components/Jogo";
 import Letras from "./components/Letras";
 import { useState } from "react";
 import palavras from "./palavras";
+import Chute from "./components/Chute";
 
 let palavraFinal = "";
 
@@ -13,8 +14,10 @@ export default function App() {
     0,
   ]);
   const [corPalavra, setCorPalavra] = useState("");
+  const [chuteDesabilitado, setChuteDesabilitado] = useState(true);
 
   function escolherPalavra() {
+    setChuteDesabilitado(false);
     if (palavraFinal !== "") {
       palavraFinal = "";
       setNumErros(0);
@@ -26,9 +29,9 @@ export default function App() {
       setCorPalavra("");
     }
     palavraFinal = palavras[Math.floor(Math.random() * palavras.length)];
-    console.log(palavraFinal);
     atualizaTelaInicial();
     ativaLetras();
+    console.log(palavraFinal);
   }
 
   function atualizaTelaInicial() {
@@ -55,8 +58,9 @@ export default function App() {
     if (palavraFinal.split("").includes(letra)) {
       atualizaTelaClique(letra, index);
     } else {
-      setNumErros(numErros + 1);
-      if (numErros === 5) {
+      let novoNumErros = numErros + 1;
+      setNumErros(novoNumErros);
+      if (novoNumErros === 6) {
         perdeuJogo();
       }
     }
@@ -100,12 +104,25 @@ export default function App() {
     }
   }
 
+  function chutouPalavra(chute) {
+    if(chute === "")
+      return;
+    if(chute === palavraFinal){
+      setPalavraMostrada(palavraFinal);
+      ganhouJogo();
+    }else{
+      setNumErros(6);
+      perdeuJogo();
+    }
+  }
+
   function ganhouJogo() {
     setCorPalavra("corPalavraVerde");
     setLetrasAtivadas([
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0,
     ]);
+    setChuteDesabilitado(true);
   }
 
   function perdeuJogo() {
@@ -115,6 +132,7 @@ export default function App() {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0,
     ]);
+    setChuteDesabilitado(true);
   }
 
   return (
@@ -126,6 +144,10 @@ export default function App() {
         corPalavra={corPalavra}
       />
       <Letras letrasAtivadas={letrasAtivadas} handleClick={clicouLetra} />
+      <Chute
+        chuteDesabilitado={chuteDesabilitado}
+        handleClick={chutouPalavra}
+      />
     </div>
   );
 }
