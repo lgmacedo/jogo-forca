@@ -6,12 +6,14 @@ export default function Chute({ chuteDesabilitado, handleClick }) {
     <div className="Chute">
       <p>Já sei a palavra!</p>
       <input
+        data-test="guess-input"
         type="text"
         value={chute}
         onChange={(e) => setChute(e.target.value)}
         disabled={chuteDesabilitado ? true : false}
       />
       <button
+        data-test="guess-button"
         className={
           chuteDesabilitado
             ? "backgroundLetraCinza corLetraCinza"
