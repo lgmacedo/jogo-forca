@@ -55,7 +55,7 @@ export default function App() {
     const novasLetras = [...letrasAtivadas];
     novasLetras[index] = 0;
     setLetrasAtivadas(novasLetras);
-    if (palavraFinal.split("").includes(letra)) {
+    if (palavraFinal.normalize('NFD').replace(/\p{Diacritic}/gu, "").split("").includes(letra)) {
       atualizaTelaClique(letra, index);
     } else {
       let novoNumErros = numErros + 1;
@@ -73,7 +73,7 @@ export default function App() {
     fix = fix.join(" ");
     const arrayIndices = [];
     for (let i = 0; i < palavraFinal.length; i++) {
-      if (palavraFinal[i] === letra) {
+      if (palavraFinal.normalize('NFD').replace(/\p{Diacritic}/gu, "")[i] === letra) {
         arrayIndices.push(i);
       }
     }
@@ -83,8 +83,10 @@ export default function App() {
     let newPalavraMostrada = fix;
     newPalavraMostrada = newPalavraMostrada.split("");
     for (let i = 0; i < fix.length; i++) {
+      console.log(newPalavraMostrada);
+      console.log(palavraFinal);
       if (arrayIndices.includes(i)) {
-        newPalavraMostrada[i] = letra;
+        newPalavraMostrada[i] = palavraFinal[i/2];
       }
     }
     newPalavraMostrada = newPalavraMostrada.join("");
