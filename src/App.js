@@ -83,8 +83,6 @@ export default function App() {
     let newPalavraMostrada = fix;
     newPalavraMostrada = newPalavraMostrada.split("");
     for (let i = 0; i < fix.length; i++) {
-      console.log(newPalavraMostrada);
-      console.log(palavraFinal);
       if (arrayIndices.includes(i)) {
         newPalavraMostrada[i] = palavraFinal[i/2];
       }
