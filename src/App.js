@@ -9,12 +9,10 @@ let palavraFinal = "";
 export default function App() {
   const [numErros, setNumErros] = useState(0);
   const [palavraMostrada, setPalavraMostrada] = useState("");
-  const [letrasAtivadas, setLetrasAtivadas] = useState([
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0,
-  ]);
+  const [letrasAtivadas, setLetrasAtivadas] = useState(Array(26).fill(0));
   const [corPalavra, setCorPalavra] = useState("");
   const [chuteDesabilitado, setChuteDesabilitado] = useState(true);
+  const maxErros = 6;
 
   function escolherPalavra() {
     setChuteDesabilitado(false);
@@ -22,10 +20,7 @@ export default function App() {
       palavraFinal = "";
       setNumErros(0);
       setPalavraMostrada("");
-      setLetrasAtivadas([
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0,
-      ]);
+      setLetrasAtivadas(Array(26).fill(0));
       setCorPalavra("");
     }
     palavraFinal = palavras[Math.floor(Math.random() * palavras.length)];
@@ -45,10 +40,7 @@ export default function App() {
   }
 
   function ativaLetras() {
-    setLetrasAtivadas([
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1,
-    ]);
+    setLetrasAtivadas(Array(26).fill(1));
   }
 
   function clicouLetra(letra, index) {
@@ -56,17 +48,18 @@ export default function App() {
     novasLetras[index] = 0;
     setLetrasAtivadas(novasLetras);
     if (palavraFinal.normalize('NFD').replace(/\p{Diacritic}/gu, "").split("").includes(letra)) {
-      atualizaTelaClique(letra, index);
+      atualizaTelaClique(letra);
     } else {
-      let novoNumErros = numErros + 1;
+      const novoNumErros = numErros + 1;
       setNumErros(novoNumErros);
-      if (novoNumErros === 6) {
+      if (novoNumErros === maxErros) {
         perdeuJogo();
       }
     }
   }
 
   function atualizaTelaClique(letra) {
+    const metade = 2;
     let fix = palavraMostrada.split(" ");
     fix = fix.join("");
     fix = fix.split("");
@@ -84,7 +77,7 @@ export default function App() {
     newPalavraMostrada = newPalavraMostrada.split("");
     for (let i = 0; i < fix.length; i++) {
       if (arrayIndices.includes(i)) {
-        newPalavraMostrada[i] = palavraFinal[i/2];
+        newPalavraMostrada[i] = palavraFinal[i/metade];
       }
     }
     newPalavraMostrada = newPalavraMostrada.join("");
@@ -105,33 +98,28 @@ export default function App() {
   }
 
   function chutouPalavra(chute) {
-    if(chute === "")
+    if(chute === ""){
       return;
+    }
     if(chute === palavraFinal){
       setPalavraMostrada(palavraFinal);
       ganhouJogo();
     }else{
-      setNumErros(6);
+      setNumErros(maxErros);
       perdeuJogo();
     }
   }
 
   function ganhouJogo() {
     setCorPalavra("corPalavraVerde");
-    setLetrasAtivadas([
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0,
-    ]);
+    setLetrasAtivadas(Array(26).fill(0));
     setChuteDesabilitado(true);
   }
 
   function perdeuJogo() {
     setPalavraMostrada(palavraFinal);
     setCorPalavra("corPalavraVermelha");
-    setLetrasAtivadas([
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0,
-    ]);
+    setLetrasAtivadas(Array(26).fill(0));
     setChuteDesabilitado(true);
   }
 
